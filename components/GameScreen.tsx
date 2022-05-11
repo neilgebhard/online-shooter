@@ -57,7 +57,7 @@ const GameScreen: React.FC<Props> = ({ score, incrementScore, endGame }) => {
       <Score score={score} />
       <Timer seconds={seconds} />
       <section
-        className={`relative h-[500px] border-2 border-gray-500 bg-gray-700`}
+        className={`relative h-[500px] border-2 border-gray-500 bg-gray-700 crosshair`}
       >
         <div
           className='relative w-[50px] h-[50px]'

@@ -14,4 +14,8 @@
   nav {
     font-family: 'VT323', monospace;
   }
+
+  .crosshair {
+    cursor: url('crosshair.cur'), auto;
+  }
 }
