@@ -59,11 +59,14 @@ const GameScreen = ({ score, incrementScore, endGame }: Props) => {
         precision={1}
         intervalDelay={10}
       />
-      <section
-        className={`relative h-[500px] border-2 border-gray-500 bg-gray-700 crosshair`}
-      >
+      <div className='relative h-[500px] w-[800px]'>
+        <canvas
+          width={800}
+          height={500}
+          className={`absolute border-2 border-gray-500 bg-gray-700 crosshair`}
+        ></canvas>
         <div
-          className='relative w-[50px] h-[50px]'
+          className='relative w-[50px] h-[50px] crosshair'
           style={{
             top: position.y,
             left: position.x,
@@ -77,7 +80,7 @@ const GameScreen = ({ score, incrementScore, endGame }: Props) => {
             layout='fill'
           />
         </div>
-      </section>
+      </div>
     </>
   )
 }
