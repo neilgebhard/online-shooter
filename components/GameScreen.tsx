@@ -36,10 +36,10 @@ const GameScreen: React.FC<Props> = ({ score, incrementScore, endGame }) => {
     return () => clearInterval(Number(timerId.current))
   }, [])
 
-  // width of screen - width of target - width of border
+  // calculation: width of screen - width of target - width of border
   function getRandomPosition() {
-    const x = Math.random() * (SCREEN_WIDTH - TARGET_WIDTH - 1)
-    const y = Math.random() * (SCREEN_HEIGHT - TARGET_WIDTH - 1)
+    const x = Math.random() * (SCREEN_WIDTH - TARGET_WIDTH - 2)
+    const y = Math.random() * (SCREEN_HEIGHT - TARGET_WIDTH - 2)
 
     return {
       x: `${x}px`,
@@ -55,7 +55,9 @@ const GameScreen: React.FC<Props> = ({ score, incrementScore, endGame }) => {
     <>
       <Score score={score} />
       <Timer seconds={seconds} />
-      <section className={`relative h-[500px] border`}>
+      <section
+        className={`relative h-[500px] border-2 border-gray-500 bg-gray-700`}
+      >
         <img
           width='50'
           height='50'
