@@ -2,7 +2,7 @@ type Props = {
   score: number
 }
 
-const Score: React.FC<Props> = ({ score }) => {
+const Score = ({ score }: Props) => {
   return <div className='text-lg'>Score: {score}</div>
 }
 

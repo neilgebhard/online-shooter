@@ -8,7 +8,7 @@ const Home: NextPage = () => {
   return (
     <Layout>
       <Head>
-        <title>Online Shooter</title>
+        <title>Shooterly</title>
         <meta name='description' content='An online shooter game' />
         <link rel='icon' href='/favicons/favicon.ico' />
       </Head>

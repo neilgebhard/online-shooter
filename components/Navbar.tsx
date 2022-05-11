@@ -2,7 +2,7 @@ import { useSession, signIn, signOut } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-const Navbar: React.FC = () => {
+const Navbar = () => {
   const { data: session } = useSession()
 
   return (

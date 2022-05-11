@@ -5,7 +5,7 @@ type Props = {
   score: number
 }
 
-const StartScreen: React.FC<Props> = ({ startGame, score }) => {
+const StartScreen = ({ startGame, score }: Props) => {
   return (
     <div
       className={`h-[${SCREEN_HEIGHT}px] flex flex-col justify-center items-center text-center`}

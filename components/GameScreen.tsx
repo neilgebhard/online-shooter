@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import Score from './Score'
-import Timer from './Timer'
 import {
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
@@ -8,6 +6,8 @@ import {
   TARGET_WIDTH,
 } from '../constants'
 import Image from 'next/image'
+import Timer from './Timer'
+import Countdown from 'react-countdown'
 
 type Props = {
   score: number
@@ -15,7 +15,7 @@ type Props = {
   endGame: () => void
 }
 
-const GameScreen: React.FC<Props> = ({ score, incrementScore, endGame }) => {
+const GameScreen = ({ score, incrementScore, endGame }: Props) => {
   const [seconds, setSeconds] = useState(SECONDS_PER_GAME)
   const [position, setPosition] = useState(getRandomPosition())
   const timerId = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -25,17 +25,16 @@ const GameScreen: React.FC<Props> = ({ score, incrementScore, endGame }) => {
   }, [score])
 
   useEffect(() => {
-    const tick = () => {
-      setSeconds((seconds) => {
-        let total = seconds - 1
-        if (total === 0) endGame()
-        return total
-      })
-    }
-
+    const tick = () => setSeconds((prev) => prev - 1)
     timerId.current = setInterval(tick, 1000)
     return () => clearInterval(Number(timerId.current))
   }, [])
+
+  useEffect(() => {
+    if (seconds <= 0) {
+      endGame()
+    }
+  }, [seconds, endGame])
 
   // calculation: width of screen - width of target - width of border
   function getRandomPosition() {
@@ -54,8 +53,12 @@ const GameScreen: React.FC<Props> = ({ score, incrementScore, endGame }) => {
 
   return (
     <>
-      <Score score={score} />
-      <Timer seconds={seconds} />
+      <Countdown
+        date={Date.now() + seconds * 1000}
+        renderer={Timer}
+        precision={1}
+        intervalDelay={10}
+      />
       <section
         className={`relative h-[500px] border-2 border-gray-500 bg-gray-700 crosshair`}
       >

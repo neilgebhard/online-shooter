@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import StartScreen from './StartScreen'
 import GameScreen from './GameScreen'
-import { SCREEN_WIDTH } from '../constants'
+import Score from './Score'
 
-const App: React.FC = () => {
+const App = () => {
   const [isPlaying, setIsPlaying] = useState(false)
   const [score, setScore] = useState(0)
 
@@ -23,11 +23,14 @@ const App: React.FC = () => {
   return (
     <div className={`w-[800px] mx-auto`}>
       {isPlaying ? (
-        <GameScreen
-          score={score}
-          incrementScore={incrementScore}
-          endGame={endGame}
-        />
+        <>
+          <Score score={score} />
+          <GameScreen
+            score={score}
+            incrementScore={incrementScore}
+            endGame={endGame}
+          />
+        </>
       ) : (
         <StartScreen startGame={startGame} score={score} />
       )}
