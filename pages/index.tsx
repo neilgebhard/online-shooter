@@ -1,9 +1,8 @@
 import type { NextPage } from 'next'
+import { useState } from 'react'
+import Game from '../components/Game'
 import Head from 'next/head'
-import Image from 'next/image'
 import Layout from '../components/Layout'
-import Navbar from '../components/Navbar'
-import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
   return (
@@ -13,8 +12,9 @@ const Home: NextPage = () => {
         <meta name='description' content='An online shooter game' />
         <link rel='icon' href='/favicons/favicon.ico' />
       </Head>
-
-      <main></main>
+      <main>
+        <Game />
+      </main>
     </Layout>
   )
 }
