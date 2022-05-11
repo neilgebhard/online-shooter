@@ -7,6 +7,7 @@ import {
   SECONDS_PER_GAME,
   TARGET_WIDTH,
 } from '../constants'
+import Image from 'next/image'
 
 type Props = {
   score: number
@@ -58,18 +59,21 @@ const GameScreen: React.FC<Props> = ({ score, incrementScore, endGame }) => {
       <section
         className={`relative h-[500px] border-2 border-gray-500 bg-gray-700`}
       >
-        <img
-          width='50'
-          height='50'
-          src='/target.png'
+        <div
+          className='relative w-[50px] h-[50px]'
           style={{
             top: position.y,
             left: position.x,
           }}
-          className='absolute'
-          onClick={handleTargetClick}
-          alt='target'
-        />
+        >
+          <Image
+            src='/target.png'
+            className='absolute'
+            onClick={handleTargetClick}
+            alt='target'
+            layout='fill'
+          />
+        </div>
       </section>
     </>
   )
