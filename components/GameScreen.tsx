@@ -11,11 +11,19 @@ import Countdown from 'react-countdown'
 
 type Props = {
   score: number
-  incrementScore: () => void
+  misses: number
   endGame: () => void
+  incrementScore: () => void
+  incrementMiss: () => void
 }
 
-const GameScreen = ({ score, incrementScore, endGame }: Props) => {
+const GameScreen = ({
+  score,
+  misses,
+  endGame,
+  incrementScore,
+  incrementMiss,
+}: Props) => {
   const [seconds, setSeconds] = useState(SECONDS_PER_GAME)
   const [position, setPosition] = useState(getRandomPosition())
   const timerId = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -51,19 +59,34 @@ const GameScreen = ({ score, incrementScore, endGame }: Props) => {
     incrementScore()
   }
 
+  const handleCanvasClick = () => {
+    incrementMiss()
+  }
+
+  const timeElapsed = SECONDS_PER_GAME - seconds
+  const speed = score / timeElapsed
+  const accuracy = (score / (misses + score)) * 100
+
   return (
     <>
+      <div className='text-lg'>Score: {score}</div>
+      <div className='text-lg'>
+        Speed: {speed > 0 && <span>{speed.toFixed(2)}t/s</span>}
+      </div>
+      <div>Accuracy: {accuracy > 0 && <span>{accuracy.toFixed(2)}%</span>}</div>
       <Countdown
         date={Date.now() + seconds * 1000}
         renderer={Timer}
         precision={1}
         intervalDelay={10}
       />
+
       <div className='relative h-[500px] w-[800px]'>
         <canvas
           width={800}
           height={500}
           className={`absolute border-2 border-gray-500 bg-gray-700 crosshair`}
+          onClick={handleCanvasClick}
         ></canvas>
         <div
           className='relative w-[50px] h-[50px] crosshair'
