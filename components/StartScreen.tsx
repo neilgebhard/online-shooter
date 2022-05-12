@@ -18,8 +18,9 @@ const StartScreen = ({ startGame, score, duration, misses }: Props) => {
   return (
     <div className='flex flex-col justify-center items-center h-[500px]'>
       <div className={`border max-w-md mx-auto bg-gray-700 p-10 space-y-8`}>
-        {score > 0 ? (
+        {score > 0 || misses > 0 ? (
           <div>
+            <h2 className='text-center mb-6 text-2xl'>Stats</h2>
             <p>Score: {score}</p>
             <p>Accuracy: {accuracy}%</p>
             <p>Speed: {speed} t/s</p>
