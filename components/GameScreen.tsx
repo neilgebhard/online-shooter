@@ -2,8 +2,9 @@ import { useEffect, useRef, useState } from 'react'
 import {
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
-  SECONDS_PER_GAME,
   TARGET_WIDTH,
+  BORDER_WIDTH,
+  START_DURATION,
 } from '../constants'
 import Image from 'next/image'
 import Timer from './Timer'
@@ -12,19 +13,22 @@ import Countdown from 'react-countdown'
 type Props = {
   score: number
   misses: number
+  duration: number
   endGame: () => void
   incrementScore: () => void
   incrementMiss: () => void
+  decrementDuration: () => void
 }
 
 const GameScreen = ({
   score,
   misses,
+  duration,
   endGame,
   incrementScore,
   incrementMiss,
+  decrementDuration,
 }: Props) => {
-  const [seconds, setSeconds] = useState(SECONDS_PER_GAME)
   const [position, setPosition] = useState(getRandomPosition())
   const timerId = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -33,21 +37,21 @@ const GameScreen = ({
   }, [score])
 
   useEffect(() => {
-    const tick = () => setSeconds((prev) => prev - 1)
+    const tick = () => decrementDuration()
     timerId.current = setInterval(tick, 1000)
     return () => clearInterval(Number(timerId.current))
   }, [])
 
   useEffect(() => {
-    if (seconds <= 0) {
+    if (duration <= 0) {
       endGame()
     }
-  }, [seconds, endGame])
+  }, [duration, endGame])
 
   // calculation: width of screen - width of target - width of border
   function getRandomPosition() {
-    const x = Math.random() * (SCREEN_WIDTH - TARGET_WIDTH - 2)
-    const y = Math.random() * (SCREEN_HEIGHT - TARGET_WIDTH - 2)
+    const x = Math.random() * (SCREEN_WIDTH - TARGET_WIDTH - BORDER_WIDTH)
+    const y = Math.random() * (SCREEN_HEIGHT - TARGET_WIDTH - BORDER_WIDTH)
 
     return {
       x: `${x}px`,
@@ -59,23 +63,21 @@ const GameScreen = ({
     incrementScore()
   }
 
-  const handleCanvasClick = () => {
+  const handleScreenClick = () => {
     incrementMiss()
   }
 
-  const timeElapsed = SECONDS_PER_GAME - seconds
+  const timeElapsed = START_DURATION - duration
   const speed = score / timeElapsed
   const accuracy = (score / (misses + score)) * 100
 
   return (
     <>
-      <div className='text-lg'>Score: {score}</div>
-      <div className='text-lg'>
-        Speed: {speed > 0 && <span>{speed.toFixed(2)}t/s</span>}
-      </div>
+      <div>Score: {score}</div>
+      <div>Speed: {timeElapsed > 0 && <span>{speed.toFixed(2)}t/s</span>}</div>
       <div>Accuracy: {accuracy > 0 && <span>{accuracy.toFixed(2)}%</span>}</div>
       <Countdown
-        date={Date.now() + seconds * 1000}
+        date={Date.now() + duration * 1000}
         renderer={Timer}
         precision={1}
         intervalDelay={10}
@@ -86,7 +88,7 @@ const GameScreen = ({
           width={800}
           height={500}
           className={`absolute border-2 border-gray-500 bg-gray-700 crosshair`}
-          onClick={handleCanvasClick}
+          onClick={handleScreenClick}
         ></canvas>
         <div
           className='relative w-[50px] h-[50px] crosshair'

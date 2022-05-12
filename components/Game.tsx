@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import StartScreen from './StartScreen'
 import GameScreen from './GameScreen'
+import { START_DURATION } from '../constants'
 
 const App = () => {
   const [isPlaying, setIsPlaying] = useState(false)
+  const [duration, setDuration] = useState(START_DURATION) // in seconds
   const [score, setScore] = useState(0)
   const [misses, setMisses] = useState(0)
 
@@ -17,11 +19,15 @@ const App = () => {
   }
 
   const incrementScore = () => {
-    setScore((score) => score + 1)
+    setScore((prev) => prev + 1)
   }
 
   const incrementMiss = () => {
-    setMisses((misses) => misses + 1)
+    setMisses((prev) => prev + 1)
+  }
+
+  const decrementDuration = () => {
+    setDuration((prev) => prev - 1)
   }
 
   return (
@@ -30,10 +36,12 @@ const App = () => {
         <>
           <GameScreen
             score={score}
+            duration={duration}
             misses={misses}
             endGame={endGame}
             incrementScore={incrementScore}
             incrementMiss={incrementMiss}
+            decrementDuration={decrementDuration}
           />
         </>
       ) : (
