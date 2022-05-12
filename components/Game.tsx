@@ -15,6 +15,12 @@ const App = () => {
     setScore(0)
   }
 
+  const restartGame = () => {
+    setDuration(START_DURATION)
+    setScore(0)
+    setMisses(0)
+  }
+
   const endGame = () => {
     setIsPlaying(false)
   }
@@ -39,6 +45,7 @@ const App = () => {
           duration={duration}
           misses={misses}
           endGame={endGame}
+          restartGame={restartGame}
           incrementScore={incrementScore}
           incrementMiss={incrementMiss}
           decrementDuration={decrementDuration}

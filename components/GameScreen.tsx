@@ -4,7 +4,6 @@ import {
   SCREEN_HEIGHT,
   TARGET_WIDTH,
   BORDER_WIDTH,
-  START_DURATION,
 } from '../constants'
 import Image from 'next/image'
 import Timer from './Timer'
@@ -19,6 +18,7 @@ type Props = {
   incrementScore: () => void
   incrementMiss: () => void
   decrementDuration: () => void
+  restartGame: () => void
 }
 
 const GameScreen = ({
@@ -29,6 +29,7 @@ const GameScreen = ({
   incrementScore,
   incrementMiss,
   decrementDuration,
+  restartGame,
 }: Props) => {
   const [position, setPosition] = useState(getRandomPosition())
   const timerId = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -66,6 +67,10 @@ const GameScreen = ({
 
   const handleScreenClick = () => {
     incrementMiss()
+  }
+
+  const handleRestart = () => {
+    restartGame()
   }
 
   const { timeElapsed, speed, accuracy } = calculateStats({
@@ -109,6 +114,9 @@ const GameScreen = ({
           />
         </div>
       </div>
+      <button type='button' onClick={handleRestart}>
+        Restart Game
+      </button>
     </>
   )
 }
