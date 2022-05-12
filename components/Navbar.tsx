@@ -1,12 +1,15 @@
-import { useSession, signIn, signOut } from 'next-auth/react'
+import { useSession, signIn } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
+import ProfileDropdown from './ProfileDropdown'
+import { LoginIcon } from '@heroicons/react/outline'
 
 const Navbar = () => {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
+  const isLoadingUser = status === 'loading'
 
   return (
-    <nav className='flex justify-between mb-20 w-[800px] mx-auto pt-4'>
+    <nav className='flex justify-between items-center mb-20 w-[800px] mx-auto pt-4'>
       <Link href='/'>
         <a className='flex items-center gap-x-2 text-4xl'>
           <div className='relative w-10 h-10'>
@@ -15,22 +18,17 @@ const Navbar = () => {
           <span>Shooterly</span>
         </a>
       </Link>
-      {session ? (
-        <div>
-          <Image
-            className='rounded-full'
-            src={session?.user?.image!}
-            width={40}
-            height={40}
-            alt='Avatar'
-          />
-          <button onClick={() => signOut()}>Sign out</button>
-        </div>
+      {isLoadingUser ? (
+        <div className='bg-gray-500 w-12 h-12 pulse' />
+      ) : session ? (
+        <ProfileDropdown />
       ) : (
-        <div>
-          Not signed in <br />
-          <button onClick={() => signIn()}>Sign in</button>
-        </div>
+        <button
+          className='flex gap-1 hover:bg-gray-700 rounded px-2 py-2'
+          onClick={() => signIn()}
+        >
+          <LoginIcon className='h-6 w-6' /> Sign in
+        </button>
       )}
     </nav>
   )
