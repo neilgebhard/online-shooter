@@ -9,6 +9,7 @@ import {
 import Image from 'next/image'
 import Timer from './Timer'
 import Countdown from 'react-countdown'
+import { calculateStats } from '../util'
 
 type Props = {
   score: number
@@ -67,15 +68,17 @@ const GameScreen = ({
     incrementMiss()
   }
 
-  const timeElapsed = START_DURATION - duration
-  const speed = score / timeElapsed
-  const accuracy = (score / (misses + score)) * 100
+  const { timeElapsed, speed, accuracy } = calculateStats({
+    duration,
+    score,
+    misses,
+  })
 
   return (
     <>
       <div>Score: {score}</div>
-      <div>Speed: {timeElapsed > 0 && <span>{speed.toFixed(2)}t/s</span>}</div>
-      <div>Accuracy: {accuracy > 0 && <span>{accuracy.toFixed(2)}%</span>}</div>
+      <div>Speed: {timeElapsed > 0 && <span>{speed} t/s</span>}</div>
+      <div>Accuracy: {Number(accuracy) > 0 && <span>{accuracy}%</span>}</div>
       <Countdown
         date={Date.now() + duration * 1000}
         renderer={Timer}

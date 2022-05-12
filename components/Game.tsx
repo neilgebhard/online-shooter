@@ -11,6 +11,7 @@ const App = () => {
 
   const startGame = () => {
     setIsPlaying(true)
+    setDuration(START_DURATION)
     setScore(0)
   }
 
@@ -33,19 +34,22 @@ const App = () => {
   return (
     <div className={`w-[800px] mx-auto`}>
       {isPlaying ? (
-        <>
-          <GameScreen
-            score={score}
-            duration={duration}
-            misses={misses}
-            endGame={endGame}
-            incrementScore={incrementScore}
-            incrementMiss={incrementMiss}
-            decrementDuration={decrementDuration}
-          />
-        </>
+        <GameScreen
+          score={score}
+          duration={duration}
+          misses={misses}
+          endGame={endGame}
+          incrementScore={incrementScore}
+          incrementMiss={incrementMiss}
+          decrementDuration={decrementDuration}
+        />
       ) : (
-        <StartScreen startGame={startGame} score={score} />
+        <StartScreen
+          startGame={startGame}
+          score={score}
+          duration={duration}
+          misses={misses}
+        />
       )}
     </div>
   )
