@@ -12,9 +12,7 @@ const Home: NextPage = () => {
         <meta name='description' content='An online shooter game' />
         <link rel='icon' href='/favicons/favicon.ico' />
       </Head>
-      <main>
-        <Game />
-      </main>
+      <Game />
     </Layout>
   )
 }

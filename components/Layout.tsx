@@ -7,10 +7,10 @@ type Props = {
 
 const Layout = ({ children }: Props) => {
   return (
-    <>
+    <main className='w-[800px] mx-auto '>
       <Navbar />
       {children}
-    </>
+    </main>
   )
 }
 

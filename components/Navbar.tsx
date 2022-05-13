@@ -9,7 +9,7 @@ const Navbar = () => {
   const isLoadingUser = status === 'loading'
 
   return (
-    <nav className='flex justify-between items-center mb-20 w-[800px] mx-auto pt-4'>
+    <nav className='flex justify-between items-center mb-20 pt-4'>
       <Link href='/'>
         <a className='flex items-center gap-x-2 text-4xl'>
           <div className='relative w-10 h-10'>
