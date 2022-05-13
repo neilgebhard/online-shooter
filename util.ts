@@ -18,8 +18,8 @@ export const calculateStats = ({
   misses,
 }: CalculateStatsProps) => {
   const timeElapsed = START_DURATION - duration
-  const speed = (score / timeElapsed).toFixed(2)
-  const accuracy = ((score / (misses + score)) * 100 || 0).toFixed(2)
+  const speed = Number((score / timeElapsed).toFixed(2))
+  const accuracy = Number(((score / (misses + score)) * 100 || 0).toFixed(2))
 
   return { timeElapsed, speed, accuracy }
 }

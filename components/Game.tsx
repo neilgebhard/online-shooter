@@ -12,6 +12,12 @@ const Game = () => {
   const [misses, setMisses] = useState(0)
   const [position, setPosition] = useState(getRandomPosition())
 
+  const { timeElapsed, speed, accuracy } = calculateStats({
+    duration,
+    score,
+    misses,
+  })
+
   const startGame = () => {
     setIsPlaying(true)
     setDuration(START_DURATION)
@@ -25,6 +31,18 @@ const Game = () => {
     setMisses(0)
   }
 
+  const endGame = () => {
+    setIsPlaying(false)
+    const data = { score, speed, accuracy }
+    fetch('/api/history', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+  }
+
   useEffect(() => {
     const { x, y } = getRandomPosition()
     setPosition({ x, y })
@@ -32,15 +50,9 @@ const Game = () => {
 
   useEffect(() => {
     if (duration <= 0) {
-      setIsPlaying(false)
+      endGame()
     }
   }, [duration])
-
-  const { timeElapsed, speed, accuracy } = calculateStats({
-    duration,
-    score,
-    misses,
-  })
 
   if (isPlaying) {
     return (
